@@ -1,64 +1,6 @@
-
-##### Punto 3 ################
-
-main <- function(){
-  print("1. Ver la función de densidad de una distribución uniforme.")
-  print("2. Ver la función de densidad de una distribución Bernoulli.")
-  print("3. Ver la funcón de densidad de una distribución Poisson.")
-  print("4. Ver la función de densidad de una distribución Exponencial.")
-  val <- as.integer(readline("Ingresar la opción que desea ver: "))
-  x <- rnorm(100)
-  i=0
-  while (i!=4){
-    print("1. Ver la función de densidad de una distribución uniforme.")
-    print("2. Ver la función de densidad de una distribución Bernoulli.")
-    print("3. Ver la funcón de densidad de una distribución Poisson.")
-    print("4. Ver la función de densidad de una distribución Exponencial.")
-    i<-as.integer(readline("Ingrese una opción:"))
-  if (val==1){
-    curve(dunif(x),xlim=c(130,210),col="blue",lwd=2,
-          xlab="x",ylab="f(x)",
-          main="Función de Densidad de una distribución uniforme")
-  } 
-  else 
-    { 
-      if (val ==2){
-    x <- seq(0, 10, by = 1)
-    y <- dbern(x, prob = 0.7)
-    plot(y, type = "o",col="blue",lwd=2,
-         xlab="x",ylab="f(x)",
-         main="Función de masa de una distribución Bernoulli")
-  }
-    else {
-      if (val ==3){
-    x <- 0:50
-    lambda <- 5
-    plot(dpois(x, lambda), type = "h", lwd = 2,
-         main = "Función de masa de probabilidad de una distribución Poisson",
-         ylab = "P(X = x)", xlab = "Número de eventos")
-    }
-      else { 
-        if (val ==4){
-      curve(dexp(x),xlim=c(130,210),col="blue",lwd=2,
-            xlab="x",ylab="f(x)",
-            main="Función de Densidad de una distribución Exponencial")
-        }
-      else if (i==5){
-        cat('\n')
-        print("Muchas gracias.")
-        cat('\n')
-      } 
-        }
-    }
-    }
-  }
-}
-
-
-
 # Punto 3
 # Instalar y abrir paquete Rlab
-#library(Rlab)
+library(Rlab)
 # Ejecutar el codigo
 
 funt <- function(){
@@ -100,4 +42,3 @@ funt <- function(){
     
   }
 }
-
