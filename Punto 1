@@ -1,0 +1,92 @@
+#------------------PUNTO 1-------------
+
+#-------------------Instrucciones------------ 
+
+# llame las siguientes librerias
+library(gapminder)
+library(dplyr)
+attach(gapminder)
+
+# Ejecute el 1er codigo
+
+
+main <- function(){
+  i<-0
+  while (i!=6) {
+    print("1. Exportar archivo gapminder y reemplazar 5% de lifeExp, pop, gdpPercap por NA.")
+    print("2. Importar el archivo gapminder.csv.")
+    print("3. Grafica de dispersión lifeExp vs pop.")
+    print("4. Grafica de dispersión gdpPercap vs pop.")
+    print("5. Diagrama de caja por continente de gdpPercap de los años 1990 a 2007.")
+    print("6. Salir")
+    
+    i<- as.integer(readline("Escoja una opción: "))
+    
+    if(i == 1){
+      d=dim(gapminder)
+      x=(as.integer(0.05*d[1])) 
+      indice1=sample(1:d[1],x)
+      indice2=sample(1:d[1],x)
+      indice3=sample(1:d[1],x)
+      gapminder$lifeExp[indice1]=NA  # remplaza de forma aleatoria el 5 % de los datos de la variable lifeExp por NA
+      gapminder$gdpPercap[indice3]=NA # remplaza de forma aleatoria el 5 % de los datos de la variable gdpPercap por NA
+      gapminder$pop[indice2]=NA      # remplaza de forma aleatoria el 5 % de los datos de la variable pop por NA
+      write.csv(gapminder, file = "gapminderss.csv")  # Exporta el archivo en formato .csv
+      cat('\n')
+      print("Archivo exportado")
+      cat('\n')
+      
+    }
+    else if(i == 2){
+      df<- read.csv("gapminders.csv") # Importa el archivo 
+      cat('\n')
+      print("Archivo importado")
+      cat('\n')
+      
+      j<- (readline("?Quiere ver el archivo?\n"))
+      cat('\n')
+      if (j=="si" | j=="SI"){
+        print(df)
+      }
+      else{
+        cat('\n')
+        print("Continue")
+        cat('\n')
+      }
+      
+    }
+    
+    else if (i==3){
+      df <-gapminder %>% 
+        #filter(continent== 'Europe') %>%
+        ggplot(aes(x=lifeExp, y=(pop), col=continent))+geom_point() 
+      print(df)
+      
+      cat('\n')
+    }
+    else if (i==4){
+      cat('\n')
+      df <-gapminder %>% 
+        #filter(continent== 'Europe') %>%
+        ggplot(aes(x=(gdpPercap), y=(pop), col=continent))+geom_point() 
+      print(df)
+      
+      #print(ggplot(df, aes(log(gdpPercap), pop, col=continent))+geom_point()+
+      #labs(x="GdpPercap", y="Población",title="Dispersión de GdpPercap vs Población"))
+      cat('\n')
+    }
+    
+    else if (i==5){
+      df <- gapminder%>% filter(year >= 1990 & year <= 2007)
+      df <- droplevels(df)
+      boxplot(df$gdpPercap ~ df$continent)
+    }
+    
+    else if (i==6){
+      cat('\n')
+      print("gracias,")
+      cat('\n')
+    }
+  }
+}
+
