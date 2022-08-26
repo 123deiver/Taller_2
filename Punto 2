@@ -1,0 +1,73 @@
+
+################ Punto 2 ################
+
+# llame estas librerias
+library(ggplot2)
+
+# Ejecute el 2do codigo
+
+
+expi<-function(){
+  print("Bienvenido")
+  cat('\n')
+  cat('\n')
+  print("Dos experimentos con valores de una distribución normal, ingrese:")
+  j<-as.integer(readline("ingrese la longitud de los datos para ambos experimentos: \n"))
+  x<-as.integer(readline("ingrese la media para el experimento_a: \n"))
+  x1<-as.integer(readline("ingrese la media para el experimento_b: \n"))
+  d<-as.integer(readline("ingrese la desviación estandar para el experimento_a: \n"))
+  d1<-as.integer(readline("ingrese la desviación estandar para el experimento_b: \n"))
+  vec1=rnorm(j,x,d)
+  vec2=rnorm(j,x1,d1)
+  write.csv(vec1, "Experimentos_A.csv") # Exporta el archivo .csv
+  write.csv(vec2, "Experimentos_B.csv") # Exporta el archivo .csv
+  vec1a<-read.csv("Experimentos_A.csv")$x  # Importa el archivo .csv
+  vec2a<-read.csv("Experimentos_B.csv")$x  # # Importa el archivo .csv
+  
+  i=0
+  while (i!=4){
+    print("1. Son las medias estadisticamente significativas")
+    print("2. Correlación de Pearson y Spearman para los experimentos.")
+    print("3. Diagrama de dispersión con linea de tendencia.")
+    print("4. Salir")
+    i<-as.integer(readline("Ingrese una opción:"))
+    if (i==1){
+      h<-t.test(vec1a,vec2a)
+      h1<-h$p.value
+      cat(sprintf("El p-valor de los experimentos es: \n %s", h1))
+      
+      if(h1>0.05){
+        cat('\n')
+        print("Las medias no presentan diferencias estadisticamente significativas")
+        cat('\n')
+      }
+      else{
+        cat('\n')
+        print("Las medias presentan diferencias estadisticamente significativas")
+
+        cat('\n')
+      }
+    }else if(i==2){
+      cat('\n')
+      print("Correlación de Pearson es:")
+      cat('\n')
+      print(cor(x=vec1a,y=vec2a))
+      cat('\n')
+      cat('\n')
+      print("Correlación de Spearman es:")
+      cat('\n')
+      print(cor(x=vec1a,y=vec2a, method = "spearman"))
+      cat('\n')
+    }else if(i==3){
+      vecT<- data.frame(vec1a, vec2a)
+      print(ggplot(vecT, aes(x=vec1a,y=vec2a))+geom_point()+
+              geom_smooth(method="lm")+
+              labs(x="Experimento_a", y="Experimento_b",
+                   title="Diagrama de dispersión con liena de tendencia" ))
+    }else if (i==4){
+      cat('\n')
+      print("Muchas gracias.")
+      cat('\n')
+    }
+  }
+}
